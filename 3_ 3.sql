@@ -20,11 +20,9 @@ GROUP BY Album_name;
 
 -- все исполнители, которые не выпустили альбомы в  2020 г
 
-SELECT album_id, artist_name, date_release FROM AlbumList albls
-JOIN AlbumArtist AlArt USING (album_id)
-JOIN ListArtists lArt USING (artist_id)
-WHERE date_release NOT BETWEEN '20200101' AND '20201231'
-GROUP BY album_id, artist_name, date_release;
+SELECT artist_name FROM ListArtists WHERE artist_id NOT IN (SELECT artist_id FROM AlbumArtist AlArt
+JOIN AlbumList AlLst USING (album_id) WHERE date_release BETWEEN '20200101' AND '20201231');
+
 
 -- названия сборников, в которых присутствует конкретный исполнитель
 
