@@ -52,10 +52,9 @@ JOIN ListArtists Lartl USING (artist_id)
 WHERE duration_track_sec = (SELECT MIN(duration_track_sec) FROM Track);
 
 
--- название альбомов, содержащих наименьшее количество треков
+- - название альбомов, содержащих наименьшее количество треков
 
 SELECT album_name, COUNT(track_id) FROM Track Tr
-JOIN AlbumList albls USING (album_id)
-GROUP BY album_name
-ORDER BY COUNT(track_id)
-LIMIT 1;
+JOIN AlbumList albls USING (album_id) GROUP BY album_name
+HAVING COUNT(track_id) = (SELECT MIN(nnn) FROM (SELECT album_name, COUNT(track_id) AS nnn FROM Track Tr
+JOIN AlbumList albls USING (album_id) GROUP BY album_name) m);
